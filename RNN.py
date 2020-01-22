@@ -73,11 +73,11 @@ regressor.fit(X_train, y_train, epochs = 100, batch_size = 32)
 
 # Getting the real stock price of 2017
 dataset_test = pd.read_csv('ie_data.csv')
-real_stock_price = dataset_test.iloc[1767:1792, 1:2].values
+real_stock_price = dataset_test.iloc[(len(dataset_test)-24):(len(dataset_test)+1), 1:2].values
 real_stock_price = list(map(float, real_stock_price))
 
 # Getting the predicted stock price of 2017
-inputs = dataset_test.iloc[1708:1792, [1,2,3,4,6,12]].values
+inputs = dataset_test.iloc[(len(dataset_test)-83):(len(dataset_test)+1), [1,2,3,4,6,12]].values
 # inputs = inputs.reshape(-1,1)
 inputs = sc.transform(inputs)
 X_test = []
@@ -90,7 +90,7 @@ trainPredict_dataset_like = np.zeros(shape=(len(predicted_stock_price), 6) )
 trainPredict_dataset_like[:,0] = predicted_stock_price[:,0]
 trainPredict= sc.inverse_transform(trainPredict_dataset_like)[:,0]
 trainPredict=trainPredict.reshape((24,1))
-trainPredict[:,0]+=float(dataset_test.iloc[1766:1767, 1:2].values)-float(dataset_test.iloc[1708:1709, 1:2].values)
+trainPredict[:,0]+=float(dataset_test.iloc[(len(dataset_test)-25):(len(dataset_test)-24), 1:2].values)-float(dataset_test.iloc[(len(dataset_test)-83):(len(dataset_test)-82), 1:2].values)
 
 
 # Visualising the results
@@ -98,6 +98,6 @@ plt.plot(real_stock_price, color = 'red', label = 'Real S&P 500')
 plt.plot(trainPredict[:,0], color = 'blue', label = 'Predicted S&P 500')
 plt.title('S&P 500 Prediction')
 plt.xlabel('Time (Months starting from October 2017) ')
-# plt.ylabel('S&P 500')
+plt.ylabel('S&P 500')
 plt.legend()
 plt.show(block=True)
