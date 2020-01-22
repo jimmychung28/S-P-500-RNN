@@ -90,7 +90,7 @@ trainPredict_dataset_like = np.zeros(shape=(len(predicted_stock_price), 6) )
 trainPredict_dataset_like[:,0] = predicted_stock_price[:,0]
 trainPredict= sc.inverse_transform(trainPredict_dataset_like)[:,0]
 trainPredict=trainPredict.reshape((24,1))
-trainPredict[:,0]+=float(dataset_test.iloc[1707:1708, 1:2].values)
+trainPredict[:,0]+=float(dataset_test.iloc[1766:1767, 1:2].values)-float(dataset_test.iloc[1708:1709, 1:2].values)
 
 
 # Visualising the results
